@@ -1,0 +1,4 @@
+configparser
+psycopg2
+numpy
+kafka-python

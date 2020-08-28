@@ -10,7 +10,7 @@ import (
 func StartKafka() {
 	conf := kafka.ReaderConfig{
 		Brokers:  []string{"localhost:9092"},
-		Topic:    "mytopic",
+		Topic:    "mytopic", //inventario
 		GroupID:  "g1",
 		MaxBytes: 10,
 	}

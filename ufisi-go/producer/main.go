@@ -10,7 +10,7 @@ import (
 func StartKafkaProducer() {
 	w := kafka.NewWriter(kafka.WriterConfig{
 		Brokers:  []string{"localhost:9092"},
-		Topic:    "mytopic",
+		Topic:    "mytopic", //cuentas
 		Balancer: &kafka.LeastBytes{},
 	})
 
