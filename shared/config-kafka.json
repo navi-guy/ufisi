@@ -1,0 +1,7 @@
+{
+    "version": "1.0.0",
+    "brokers": [{
+        "ip" : "localhost",
+        "port": "9092"
+    }]
+}
