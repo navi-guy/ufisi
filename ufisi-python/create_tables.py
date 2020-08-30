@@ -6,37 +6,28 @@ from config import config
 def create():
     print(""" create tables in the PostgreSQL database""")
     commands = (
-        """ CREATE TABLE IF NOT EXISTS  vendors (
-            vendor_id SERIAL PRIMARY KEY,
-            vendor_name VARCHAR(255) NOT NULL
+        """ CREATE TABLE IF NOT EXISTS  PRODUCTOS (
+                id_producto SERIAL PRIMARY KEY,
+                nombre VARCHAR(50) NOT NULL,
+                precio DECIMAL(10,2) NOT NULL,
+                stock INTEGER NOT NULL
         )
         """,
-        """ CREATE TABLE IF NOT EXISTS  parts (
-                part_id SERIAL PRIMARY KEY,
-                part_name VARCHAR(255) NOT NULL
+        """ CREATE TABLE IF NOT EXISTS  ORDEN (
+                id_orden SERIAL PRIMARY KEY,
+                estado VARCHAR(50) NOT NULL,
+                id_cliente INTEGER NOT NULL,
+                fecha_hora TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
                 )
         """,
-        """ CREATE TABLE IF NOT EXISTS  part_drawings (
-                part_id INTEGER PRIMARY KEY,
-                file_extension VARCHAR(5) NOT NULL,
-                drawing_data BYTEA NOT NULL,
-                FOREIGN KEY (part_id)
-                REFERENCES parts (part_id)
-                ON UPDATE CASCADE ON DELETE CASCADE
+        """ CREATE TABLE IF NOT EXISTS  DETALLE_ORDEN (
+                id_detalle_orden SERIAL PRIMARY KEY,
+                id_orden INTEGER NOT NULL,
+                id_producto INTEGER NOT NULL,
+                cantidad INTEGER NO NULL
         )
-        """,
-        """ CREATE TABLE IF NOT EXISTS  vendor_parts (
-                vendor_id INTEGER NOT NULL,
-                part_id INTEGER NOT NULL,
-                PRIMARY KEY (vendor_id , part_id),
-                FOREIGN KEY (vendor_id)
-                    REFERENCES vendors (vendor_id)
-                    ON UPDATE CASCADE ON DELETE CASCADE,
-                FOREIGN KEY (part_id)
-                    REFERENCES parts (part_id)
-                    ON UPDATE CASCADE ON DELETE CASCADE
-        )
-        """)
+        """
+    )
     conn = None
     try:
         # read the connection parameters
