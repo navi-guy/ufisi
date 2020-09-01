@@ -1,0 +1,22 @@
+{
+  "name": "cuentas",
+  "version": "1.0.0",
+  "description": "Modulo cuentas por cobrar",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "cuentas",
+    "kafka"
+  ],
+  "author": "Jesus Jair Alarcon Arca",
+  "license": "MIT",
+  "dependencies": {
+    "kafka-node": "^5.0.0",
+    "mongodb": "^3.6.0",
+    "mongoose": "^5.10.1"
+  }
+}
