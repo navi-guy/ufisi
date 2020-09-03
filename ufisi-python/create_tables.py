@@ -24,7 +24,7 @@ def create():
                 id_detalle_orden SERIAL PRIMARY KEY,
                 id_orden INTEGER NOT NULL,
                 id_producto INTEGER NOT NULL,
-                cantidad INTEGER NO NULL
+                cantidad INTEGER NOT NULL
         )
         """
     )

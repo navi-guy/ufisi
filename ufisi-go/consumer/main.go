@@ -1,4 +1,4 @@
-package kafka
+package consumer
 
 import (
 	"context"
@@ -7,10 +7,15 @@ import (
 	"github.com/segmentio/kafka-go"
 )
 
+/**
+ * Inicia el consumidor y lo suscribe al tópico test.
+ *
+ * @return void
+ */
 func StartKafka() {
 	conf := kafka.ReaderConfig{
 		Brokers:  []string{"localhost:9092"},
-		Topic:    "mytopic", //inventario
+		Topic:    "test", //inventario
 		GroupID:  "g1",
 		MaxBytes: 10,
 	}
@@ -23,7 +28,8 @@ func StartKafka() {
 			fmt.Println("Some error occured", err)
 			continue
 		}
-		fmt.Println("Message is : ", string(m.Value))
+		fmt.Println("Message from Inventario : ", string(m.Value))
+		fmt.Println("Save on inventary Database!")
 	}
 
 }
