@@ -2,7 +2,7 @@
 Proyecto del curso Sistemas Distribuidos. Orquestación de procesos de negocio. Demostrar la aplicabilidad de la utilización de la Tecnología de Middleware Orientado a Mensajes para soportar la ejecución sincronizada de procesos de negocio
 
 ## Orquestación de procesos de negocio
-![Macpato - Página 1](https://user-images.githubusercontent.com/45251599/91544497-710c2e80-e8e5-11ea-8377-97eaa3177e22.png)
+![Macpato - Página 1 (1)](https://user-images.githubusercontent.com/45251599/92109440-a6fe5680-edae-11ea-8254-3754c4bd0659.png)
 ### Pre-requisitos 📋
 https://kafka.apache.org/downloads
 
@@ -10,7 +10,7 @@ https://git-scm.com/downloads
 
 ## Importante 🤬🤬
 * Para descargar el repositorio en tu PC, debes descargarlo sobre la carpeta __*C:\Users\YourName\go\src*__ (Ver instalación de Go), **es decir primero descargar Go y luego descargar el repositorio.**
-* Las siguientes  instrucciones son para la instalación y configuración de los módulos en **Windows**.
+* Las siguientes  instrucciones son para la instalación en el sistema operativo en **Windows**.
 
 ## Golang | Facturación  📠
 ### Requerimientos e instalación 🔧
@@ -107,6 +107,7 @@ python main.py
 ```
 
 *Creará las tablas necesarias.
+
 **Enviará el mensaje con el tópico "test" al módulo de facturación.
 
 

@@ -33,14 +33,18 @@ func CreateDatabase(name string) {
 	if err != nil {
 		panic(err)
 	}
-
+	// add table items_factura
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS factura(
    			id_factura int NOT NULL AUTO_INCREMENT, 
-			id_orden int, 
 			codigo_factura varchar(30), 
-			fecha date,
+			codigo_cliente varchar(30),
+			nombre_cliente varchar(30),
+			ruc_cliente varchar(30),
+			total_igv float,
 			total float,
+			fecha date,
 			PRIMARY KEY (id_factura));`)
+	// items_factura(id_item, id_factura, descripcion_item, cantidad, precio_unitario, subtotal)
 	if err != nil {
 		panic(err)
 	}
