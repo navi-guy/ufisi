@@ -64,7 +64,7 @@ i. Instala virtualenv con pip
 
 `pip install virtualenv`
 
-ii.	Dirigete a la carpeta donde descargaste el repositorio y al módulo de python ( C:\Users\YourName\go\src\fisi-tiendas-utiles\ufisi-python ) y abre la consola de cmd. 
+ii.	Dirigete a la carpeta donde descargaste el repositorio y al módulo de python ( C:\Users\YourName\go\src\ufisi\ufisi-python ) y abre la consola de cmd. 
 
 
 iii.	En el cmd, ingresa el siguiente comando, para crear el entorno virtual del módulo:
@@ -100,7 +100,7 @@ CREATE DATABASE inventario OWNER navi;
 ```
 Configura el archivo database.ini con las credenciales con las que creaste la bd.
 
-5. Ahora adentro de la carpeta de __ufisi/python__, en la consola de comandos ejecuta el siguiente comando.
+5. Ahora adentro de la carpeta de __ufisi-python__, en la consola de comandos ejecuta el siguiente comando.
  
 ```
 python main.py
@@ -108,10 +108,19 @@ python main.py
 
 *Creará las tablas necesarias.
 
-**Enviará el mensaje con el tópico "test" al módulo de facturación.
+*Esperará por mensajes del primer módulo.
+
+***Enviará el mensaje con el tópico "test" al módulo de facturación.
 
 
 ## Java | Procesamiento de ordenes 🛒
+### Requerimientos e instalación 🔧
+1. Tener instalado lo siguiente:
+- Intellij
+- JavaJDK 8
 ...
+
+
+
 ## Javascript | Cuentas por Cobrar 💳
-...
+npm ...
