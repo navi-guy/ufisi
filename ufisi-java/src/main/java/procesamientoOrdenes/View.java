@@ -38,7 +38,7 @@ public class View extends JFrame{
                                     "{\"nombre\":\"Cuaderno Normal\"," +
                                     "\"cantidad\":\"8\","+
                                     "\"precio_unitario\":\"5.50\"}]}";
-                productor.enviar("inventario",messageToInventario);
+                productor.enviar(messageToInventario);
                 System.out.println( "Mensaje: "+ messageToInventario);
                 System.out.println("Enviado !");
                 // System.out.println(consumidor.recibir("test","productoID"));
