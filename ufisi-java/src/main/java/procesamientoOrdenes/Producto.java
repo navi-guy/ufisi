@@ -1,4 +1,4 @@
-package prueba;
+package procesamientoOrdenes;
 
 public class Producto {
 
@@ -47,6 +47,6 @@ public class Producto {
     }
 
     public String flujoProducto() {
-        return  id + "," + nombre + "," + precio + "," + inventario;
+        return id + "," + nombre + "," + precio + "," + inventario;
     }
 }

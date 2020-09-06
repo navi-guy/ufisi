@@ -1,4 +1,4 @@
-package prueba;
+package procesamientoOrdenes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
