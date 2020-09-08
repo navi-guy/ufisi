@@ -5,13 +5,19 @@ public class Producto {
     private String id;
     private String nombre;
     private double precio;
-    private int inventario;
+    private int cantidad;
 
-    public Producto(String id, String nombre, double precio, int inventario) {
+    public Producto(String id, String nombre, double precio, int cantidad) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
-        this.inventario = inventario;
+        this.cantidad = cantidad;
+    }
+
+    public Producto(String id, String nombre, double precio) {
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
     }
 
     public String getId() {
@@ -38,15 +44,15 @@ public class Producto {
         this.precio = precio;
     }
 
-    public int getInventario() {
-        return inventario;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public void setInventario(int inventario) {
-        this.inventario = inventario;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public String flujoProducto() {
-        return  id + "," + nombre + "," + precio + "," + inventario;
+    public String[] convertirString() {
+        return new String[]{id, nombre, Double.toString(precio),Integer.toString(cantidad)};
     }
 }

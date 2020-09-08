@@ -9,7 +9,7 @@ public class Main {
             @Override
             public void run() {
                 JFrame frame = new View();
-                frame.setSize(700,400);
+                frame.setSize(1400,600);
                 frame.setVisible(true);
             }
         });
