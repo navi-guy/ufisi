@@ -1,22 +1,31 @@
-require('./repository/connection');
-const accountReceivableHandler = require('./handlers/accountReceivableHandler');
+const { db, bootstrap, kafka } = require('./config.json');
+const Connection = require('./repository/Connection');
+const recieveAccountReceivable = require('./handlers/receiveAccountReceivable');
 const { KafkaClient, Consumer, Producer } = require('kafka-node');
 
-function main() {
-    const client = new KafkaClient({ kafkaHost: 'ec2-100-25-165-143.compute-1.amazonaws.com:9092' });
-    const producer = new Producer(client);
-    seedInvoce(producer, { number: "1234", cliente: { nombre: "El navis", apellidos: "correlon" } });
-    const consumer = new Consumer(client, [{ topic: 'invoces' }], { autoCommit: true });
-    consumer.on('message', accountReceivableHandler(producer));
+async function main() {
+    try {
+        await Connection.connect(db);
+        const client = new KafkaClient({ kafkaHost: bootstrap.servers });
+        const producer = new Producer(client);
+        seedInvoce(producer, { number: "1234", cliente: { nombre: "El benjas", apellidos: "pelucon" } });
+        const consumer = new Consumer(client, [{ topic: kafka.topics[0].name }], { autoCommit: true });
+        consumer.on('message', recieveAccountReceivable(producer, kafka.topics[1].name));
+    } catch (err) {
+        console.log(err);
+    }
+
 }
 
 function seedInvoce(producer, invoce) {
     producer.on('ready', function () {
         const data = [
-            { topic: 'invoces', messages: JSON.stringify(invoce) }
+            { topic: 'facturacion', messages: JSON.stringify(invoce) }
         ];
 
         producer.send(data, function (err, resp) {
+            console.log(resp)
+
         })
     });
 
@@ -24,5 +33,6 @@ function seedInvoce(producer, invoce) {
         console.log(err);
     });
 }
+
 
 main();

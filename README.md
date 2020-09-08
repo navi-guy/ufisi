@@ -123,4 +123,9 @@ python main.py
 
 
 ## Javascript | Cuentas por Cobrar 💳
-npm ...
+### Requerimientos e instalación 🔧
+1. Instala **Node** en tu PC desde la página principal **[Ir a la pagina de nodejs](https://nodejs.org/es/)**.
+2. Instala **MongoDB** en tu PC desde la página principal **[Ir a la pagina de mongodb](https://docs.mongodb.com/manual/administration/install-community/)**.
+3. En la terminal, dentro de la carpeta __ufisi/ufisi-node__ ejecutas el siguiente comando `npm i` para instalar las dependecias.
+3. Dentro de la carpeta __src/__ se encontrara el archivo **config.json** deberas cambiar los valores de acuerdo a tu configuracion local.
+4. Finalmente, desde la terminal, ejecutas la aplicacion con el comando `npm start`.
