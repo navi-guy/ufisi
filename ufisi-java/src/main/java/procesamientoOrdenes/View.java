@@ -1,4 +1,4 @@
-package prueba;
+package procesamientoOrdenes;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -50,7 +50,7 @@ public class View extends JFrame{
                 montoTotal.setText("10.5");
                 String messageToInventario = convertidor.toJson(productosCarrito);
                 System.out.println(messageToInventario);
-                productor.enviar("inventario",messageToInventario);
+                productor.enviar(messageToInventario);
                 System.out.println( "Mensaje: "+ messageToInventario);
                 System.out.println("Enviado !");
             }
