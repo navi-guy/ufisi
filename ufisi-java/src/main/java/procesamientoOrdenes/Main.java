@@ -1,6 +1,7 @@
-package prueba;
+package procesamientoOrdenes;
 
 import javax.swing.*;
+
 
 public class Main {
 

@@ -1,4 +1,4 @@
-package prueba;
+package procesamientoOrdenes;
 
 public class Producto {
 
