@@ -17,7 +17,7 @@ public class View extends JFrame{
     private JButton quitarButton;
     private JTable tableProductosCarrito;
     private JButton realizarPedidoButton;
-    private JLabel montoTotal;
+    private JLabel labelMontoTotal;
     private JTable tableProductos;
     private MessageSender productor;
     private MessageReceiver consumidor;
@@ -25,6 +25,7 @@ public class View extends JFrame{
     private ArrayList<Producto> productosCarrito;
     private Producto productoPrueba1 = new Producto("21","papel",20.5);
     private Producto productoPrueba2 = new Producto("22","madera",10);
+    private double montoTotal = 0.0;
 
     public View() {
         super("Modulo Productos");
@@ -47,10 +48,10 @@ public class View extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Gson convertidor = new Gson();
-                montoTotal.setText("10.5");
-                String messageToInventario = convertidor.toJson(productosCarrito);
+                Orden orden = new Orden("12",productosCarrito);
+                String messageToInventario = convertidor.toJson(orden);
                 System.out.println(messageToInventario);
-                productor.enviar(messageToInventario);
+                productor.enviar("orden",messageToInventario);
                 System.out.println( "Mensaje: "+ messageToInventario);
                 System.out.println("Enviado !");
             }
@@ -58,15 +59,31 @@ public class View extends JFrame{
         agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //boolean encontrado = true;
-                String nombre = productoTextField.getText();
                 DefaultTableModel model = (DefaultTableModel) tableProductosCarrito.getModel();
+                String nombre = productoTextField.getText();
                 int cantidad = Integer.parseInt(cantidadTextField.getText());
-                for(Producto producto: listaProductos){
-                    if(producto.getNombre().equals(nombre)){
-                        Producto nuevoProducto = new Producto(producto.getId(),producto.getNombre(),producto.getPrecio(),cantidad);
-                        productosCarrito.add(nuevoProducto);
-                        model.addRow(nuevoProducto.convertirString());
+                boolean encontrado = false;
+                int i=0;
+                while(i<productosCarrito.size() && !encontrado){
+                    if(productosCarrito.get(i).getNombre().equals(nombre)){
+                        int nuevaCantidad = productosCarrito.get(i).getCantidad() + cantidad;
+                        montoTotal = montoTotal + productosCarrito.get(i).getPrecio() * cantidad;
+                        productosCarrito.get(i).setCantidad(nuevaCantidad);
+                        model.setValueAt(nuevaCantidad,i,3);
+                        labelMontoTotal.setText(Double.toString(montoTotal));
+                        encontrado = true;
+                    }
+                    i++;
+                }
+                if(!encontrado){
+                    for(Producto producto: listaProductos){
+                        if(producto.getNombre().equals(nombre)){
+                            Producto nuevoProducto = new Producto(producto.getCodigo_producto(),producto.getNombre(),producto.getPrecio(),cantidad);
+                            productosCarrito.add(nuevoProducto);
+                            model.addRow(nuevoProducto.convertirString());
+                            montoTotal = montoTotal + nuevoProducto.getPrecio() * nuevoProducto.getCantidad();
+                            labelMontoTotal.setText(Double.toString(montoTotal));
+                        }
                     }
                 }
             }
@@ -77,17 +94,38 @@ public class View extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 DefaultTableModel model = (DefaultTableModel) tableProductosCarrito.getModel();
                 int fila = tableProductosCarrito.getSelectedRow();
-                String nombreEliminar = (String) model.getValueAt(fila,1);
-                boolean encontrado=false;
                 int i =0;
-                while(i<productosCarrito.size() && !encontrado){
-                    if(productosCarrito.get(i).getNombre().equals(nombreEliminar)){
-                        productosCarrito.remove(productosCarrito.get(i));
-                        model.removeRow(fila);
-                        encontrado = true;
+                boolean encontrado=false;
+                if(fila >= 0){
+                    String nombreEliminar = (String) model.getValueAt(fila,1);
+                    while(i<productosCarrito.size() && !encontrado){
+                        if(productosCarrito.get(i).getNombre().equals(nombreEliminar)){
+                            montoTotal = montoTotal - productosCarrito.get(i).getPrecio() * productosCarrito.get(i).getCantidad();
+                            productosCarrito.remove(productosCarrito.get(i));
+                            model.removeRow(fila);
+                            labelMontoTotal.setText(Double.toString(montoTotal));
+                            encontrado = true;
+                        }
+                        i++;
                     }
-                    i++;
+                } else {
+                    i = 0;
+                    encontrado = false;
+                    String nombre = productoTextField.getText();
+                    int cantidad = Integer.parseInt(cantidadTextField.getText());
+                    while(i<productosCarrito.size() && !encontrado){
+                        if(productosCarrito.get(i).getNombre().equals(nombre)){
+                            int nuevaCantidad = productosCarrito.get(i).getCantidad() - cantidad;
+                            montoTotal = montoTotal - productosCarrito.get(i).getPrecio() * cantidad;
+                            productosCarrito.get(i).setCantidad(nuevaCantidad);
+                            model.setValueAt(nuevaCantidad,i,3);
+                            labelMontoTotal.setText(Double.toString(montoTotal));
+                            encontrado = true;
+                        }
+                        i++;
+                    }
                 }
+
             }
         });
     }
@@ -96,7 +134,7 @@ public class View extends JFrame{
         DefaultTableModel model = (DefaultTableModel) tableProductos.getModel();
         Gson convertidor = new Gson();
         //String mensajeProductos = consumidor.recibir("inventario","productoID");
-        String mensajeProductos = "[{\"id\":\"21\",\"nombre\":\"papel\",\"precio\":20.5,\"cantidad\":0},{\"id\":\"22\",\"nombre\":\"madera\",\"precio\":10.0,\"cantidad\":0}]";
+        String mensajeProductos = "[{\"codigo_producto\":\"21\",\"nombre\":\"papel\",\"precio\":20.5,\"cantidad\":0},{\"codigo_producto\":\"22\",\"nombre\":\"madera\",\"precio\":10.0,\"cantidad\":0}]";
         listaProductos = convertidor.fromJson(mensajeProductos,new TypeToken<ArrayList<Producto>>() {}.getType());
 
 
