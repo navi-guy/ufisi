@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Prueba.iml" filepath="$PROJECT_DIR$/Prueba.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ufisi-java.iml" filepath="$PROJECT_DIR$/ufisi-java.iml" />
     </modules>
   </component>
 </project>
