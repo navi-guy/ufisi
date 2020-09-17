@@ -9,15 +9,12 @@ import java.util.Properties;
 
 public class MessageSender {
 
-    Properties prop = new Properties();
-    //Producto producto = new Producto("123","jabon",20.5,10);
+    Properties prop = new PropertiesReader().getProperties();
 
-    public void enviar(String topico, String mensaje){
-        prop.setProperty("bootstrap.servers","localhost:9092");
-        prop.setProperty("kafka.topic.name",topico);
-        KafkaProducer<String,byte[]> producer = new KafkaProducer<String,byte[]>(this.prop, new StringSerializer(), new ByteArraySerializer());
+    public void enviar(String topico, String mensaje) {
+        KafkaProducer<String, byte[]> producer = new KafkaProducer<>(this.prop, new StringSerializer(), new ByteArraySerializer());
         byte[] flujo = mensaje.getBytes();
-        ProducerRecord<String,byte[]> record = new ProducerRecord<String,byte[]>(prop.getProperty("kafka.topic.name"),flujo);
+        ProducerRecord<String, byte[]> record = new ProducerRecord<>(prop.getProperty("kafka.topic.name"), flujo);
         producer.send(record);
         producer.close();
     }
