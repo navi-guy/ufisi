@@ -18,13 +18,10 @@ const port = "3306"
  */
 func CreateDatabase(name string) {
 
-	db, err := sql.Open("mysql", user+":"+password+"@tcp("+server+":"+port+")/")
-	if err != nil {
-		panic(err)
-	}
+	db := Conn()
 	defer db.Close()
 
-	_, err = db.Exec("CREATE DATABASE IF NOT EXISTS " + name)
+	_, err := db.Exec("CREATE DATABASE IF NOT EXISTS " + name)
 	if err != nil {
 		panic(err)
 	}
@@ -34,18 +31,27 @@ func CreateDatabase(name string) {
 		panic(err)
 	}
 	// add table items_factura
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS factura(
-   			id_factura int NOT NULL AUTO_INCREMENT, 
-			codigo_factura varchar(30), 
-			codigo_cliente varchar(30),
-			nombre_cliente varchar(30),
-			ruc_cliente varchar(30),
-			total_igv float,
-			total float,
-			fecha date,
-			PRIMARY KEY (id_factura));`)
-	// items_factura(id_item, id_factura, descripcion_item, cantidad, precio_unitario, subtotal)
+	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS facturas(
+		id_factura int NOT NULL AUTO_INCREMENT, 
+		id_orden int,
+		codigo_factura varchar(30), 
+		total_bruto float,
+		igv float,
+		PRIMARY KEY (id_factura));`)
 	if err != nil {
 		panic(err)
 	}
+}
+
+// Conn creates a conexion to database.
+func Conn() (db *sql.DB) {
+	db, err := sql.Open("mysql", user+":"+password+"@tcp("+server+":"+port+")/")
+	if err != nil {
+		panic(err)
+	}
+	_, err = db.Exec("USE facturacion_db")
+	if err != nil {
+		panic(err)
+	}
+	return db
 }
