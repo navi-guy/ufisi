@@ -2,9 +2,13 @@ package consumer
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
-	"github.com/segmentio/kafka-go"
+	"ufisi-go/db"
+	"ufisi-go/model"
 	producer "ufisi-go/producer"
+
+	"github.com/segmentio/kafka-go"
 )
 
 /**
@@ -15,7 +19,7 @@ import (
 func StartKafkaConsumer() {
 	conf := kafka.ReaderConfig{
 		Brokers:  []string{"ec2-3-85-41-237.compute-1.amazonaws.com:9092"},
-		Topic:    "facturacion", 
+		Topic:    "facturacion",
 		MaxBytes: 10,
 	}
 
@@ -29,8 +33,36 @@ func StartKafkaConsumer() {
 		}
 		message := string(m.Value)
 		fmt.Println("Message from Inventario : ", message)
-		go producer.StartKafkaProducer("cuentasPorCobrar", message);
+		jsonMsge := `{"id_orden": "1", "codigo_factura": "F0008", "total_bruto": 12.5,"igv": 5.2, "datox": "adsasda"}`
+		fact := model.Factura{}
+		json.Unmarshal([]byte(jsonMsge), &fact)
+		fmt.Println("Factura = ", fact)
+		idFactura := StoreFactura(fact)
+		fmt.Println(idFactura)
 		fmt.Println("Save on inventary Database!")
-	}
+		go producer.StartKafkaProducer("cuentasPorCobrar", message)
 
+	}
+}
+
+// StoreFactura insert on database the facturas and item_factura
+func StoreFactura(f model.Factura) (id int64) {
+	db := db.Conn()
+	_, err := db.Exec("USE facturacion_db")
+	if err != nil {
+		panic(err)
+	}
+	stmt, err := db.Prepare("INSERT into facturas(id_orden,codigo_factura,total_bruto,igv) values(?,?,?,?)")
+	checkErr(err)
+	res, err := stmt.Exec(f.IDOrden, f.CodigoFactura, f.TotalBruto, f.Igv)
+	checkErr(err)
+	id, err = res.LastInsertId()
+	checkErr(err)
+	return id
+}
+
+func checkErr(err error) {
+	if err != nil {
+		panic(err)
+	}
 }

@@ -6,8 +6,8 @@ import (
 	_ "github.com/go-sql-driver/mysql" // '_' significa q no se usará la variable
 )
 
-const user = "root"
-const password = "123456"
+const user = "deus"
+const password = "deus"
 const server = "127.0.0.1"
 const port = "3306"
 
@@ -46,10 +46,6 @@ func CreateDatabase(name string) {
 // Conn creates a conexion to database.
 func Conn() (db *sql.DB) {
 	db, err := sql.Open("mysql", user+":"+password+"@tcp("+server+":"+port+")/")
-	if err != nil {
-		panic(err)
-	}
-	_, err = db.Exec("USE facturacion_db")
 	if err != nil {
 		panic(err)
 	}
