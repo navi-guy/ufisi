@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"time"
-	appKafka "ufisi-go/consumer"
+	appKafka "ufisi-go/producer"
 	"ufisi-go/db"
 )
 
@@ -19,7 +19,8 @@ func main() {
 
 	db.CreateDatabase("facturacion")
 	fmt.Println("BD creada correctamente")
-	go appKafka.StartKafka()
+	go appKafka.StartKafkaProducer()
 	fmt.Println("Kafka has been started...")
 	time.Sleep(10 * time.Minute)
 }
+

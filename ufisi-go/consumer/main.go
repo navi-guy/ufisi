@@ -3,7 +3,6 @@ package consumer
 import (
 	"context"
 	"fmt"
-
 	"github.com/segmentio/kafka-go"
 )
 
@@ -14,9 +13,8 @@ import (
  */
 func StartKafka() {
 	conf := kafka.ReaderConfig{
-		Brokers:  []string{"localhost:9092"},
-		Topic:    "test", //inventario
-		GroupID:  "g1",
+		Brokers:  []string{"ec2-3-85-41-237.compute-1.amazonaws.com:9092"},
+		Topic:    "facturacion", 
 		MaxBytes: 10,
 	}
 
