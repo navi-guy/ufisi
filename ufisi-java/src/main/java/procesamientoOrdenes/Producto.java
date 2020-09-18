@@ -2,30 +2,30 @@ package procesamientoOrdenes;
 
 public class Producto {
 
-    private String id;
+    private String codigo_producto;
     private String nombre;
     private double precio;
     private int cantidad;
 
-    public Producto(String id, String nombre, double precio, int cantidad) {
-        this.id = id;
+    public Producto(String codigo_producto, String nombre, double precio, int cantidad) {
+        this.codigo_producto = codigo_producto;
         this.nombre = nombre;
         this.precio = precio;
         this.cantidad = cantidad;
     }
 
-    public Producto(String id, String nombre, double precio) {
-        this.id = id;
+    public Producto(String codigo_producto, String nombre, double precio) {
+        this.codigo_producto = codigo_producto;
         this.nombre = nombre;
         this.precio = precio;
     }
 
-    public String getId() {
-        return id;
+    public String getCodigo_producto() {
+        return codigo_producto;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCodigo_producto(String codigo_producto) {
+        this.codigo_producto = codigo_producto;
     }
 
     public String getNombre() {
@@ -53,6 +53,6 @@ public class Producto {
     }
 
     public String[] convertirString() {
-        return new String[]{id, nombre, Double.toString(precio),Integer.toString(cantidad)};
+        return new String[]{codigo_producto, nombre, Double.toString(precio),Integer.toString(cantidad)};
     }
 }

@@ -3,8 +3,8 @@ package consumer
 import (
 	"context"
 	"fmt"
-
 	"github.com/segmentio/kafka-go"
+	producer "ufisi-go/producer"
 )
 
 /**
@@ -12,11 +12,10 @@ import (
  *
  * @return void
  */
-func StartKafka() {
+func StartKafkaConsumer() {
 	conf := kafka.ReaderConfig{
-		Brokers:  []string{"localhost:9092"},
-		Topic:    "test", //inventario
-		GroupID:  "g1",
+		Brokers:  []string{"ec2-3-85-41-237.compute-1.amazonaws.com:9092"},
+		Topic:    "facturacion", 
 		MaxBytes: 10,
 	}
 
@@ -28,7 +27,9 @@ func StartKafka() {
 			fmt.Println("Some error occured", err)
 			continue
 		}
-		fmt.Println("Message from Inventario : ", string(m.Value))
+		message := string(m.Value)
+		fmt.Println("Message from Inventario : ", message)
+		go producer.StartKafkaProducer("cuentasPorCobrar", message);
 		fmt.Println("Save on inventary Database!")
 	}
 

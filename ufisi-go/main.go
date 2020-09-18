@@ -39,8 +39,10 @@ func StoreFactura(f model.Factura) (id int64) {
 	return id
 }
 
+
 func checkErr(err error) {
 	if err != nil {
 		panic(err)
 	}
 }
+

@@ -4,7 +4,7 @@ from producer import sendToFacturacion
 
 def receiveFromOrdenes():
     print("Esperando ....")
-    consumer = KafkaConsumer(value_deserializer=lambda m: json.loads(m.decode('ascii')))
+    consumer = KafkaConsumer(bootstrap_servers=['ec2-3-85-41-237.compute-1.amazonaws.com:9092'], value_deserializer=lambda m: json.loads(m.decode('ascii')))
     consumer.subscribe(['inventario'])
     for msg in consumer:
         msgToFacturacion = msg.value 
