@@ -8,10 +8,10 @@
     "kafka": {
         "topics": [
             {
-                "name": "facturacion"
+                "name": "cuentasPorCobrar"
             },
             {
-                "name": "cuentasPorCobrar"
+                "name": "confirmacion"
             }
         ]
     },
