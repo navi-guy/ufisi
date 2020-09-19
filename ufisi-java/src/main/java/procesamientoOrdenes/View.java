@@ -49,13 +49,17 @@ public class View extends JFrame {
         realizarPedidoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Gson convertidor = new Gson();
-                Orden orden = new Orden("12", productosCarrito, montoTotal);
-                String messageToInventario = convertidor.toJson(orden);
-                System.out.println(messageToInventario);
-                productor.enviar(messageToInventario);
-                System.out.println("Mensaje: " + messageToInventario);
-                System.out.println("Enviado !");
+                if(productosCarrito.size() > 0){
+                    Gson convertidor = new Gson();
+                    Orden orden = new Orden("12", productosCarrito, montoTotal);
+                    String messageToInventario = convertidor.toJson(orden);
+                    productor.enviar(messageToInventario);
+                    System.out.println("Mensaje: " + messageToInventario);
+                    System.out.println("Enviado !");
+                } else{
+                    JOptionPane.showMessageDialog(null,"Mano no seas idiota llena algo primero");
+                }
+
             }
         });
         agregarButton.addActionListener(new ActionListener() {
