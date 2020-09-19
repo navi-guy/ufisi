@@ -34,6 +34,7 @@ public class View extends JFrame{
         consumidor = new MessageReceiver();
         productosCarrito = new ArrayList<>();
         listaProductos = new ArrayList<>();
+
         tableProductos.setModel(new DefaultTableModel(
                 null,
                 new String[] {"Codigo","Nombre","Precio (S/.)"}
@@ -48,7 +49,7 @@ public class View extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Gson convertidor = new Gson();
-                Orden orden = new Orden("12",productosCarrito);
+                Orden orden = new Orden("12",productosCarrito,montoTotal);
                 String messageToInventario = convertidor.toJson(orden);
                 System.out.println(messageToInventario);
                 productor.enviar("orden",messageToInventario);
