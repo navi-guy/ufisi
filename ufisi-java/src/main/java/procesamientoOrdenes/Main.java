@@ -14,5 +14,8 @@ public class Main {
                 frame.setVisible(true);
             }
         });
+        Runnable runnableReceiver = new MessageReceiver(); // or an anonymous class, or lambda...
+        Thread thread = new Thread(runnableReceiver);
+        thread.start();
     }
 }
