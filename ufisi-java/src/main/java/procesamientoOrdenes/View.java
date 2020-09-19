@@ -49,15 +49,15 @@ public class View extends JFrame {
         realizarPedidoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(productosCarrito.size() > 0){
+                if (productosCarrito.size() > 0) {
                     Gson convertidor = new Gson();
                     Orden orden = new Orden("12", productosCarrito, montoTotal);
                     String messageToInventario = convertidor.toJson(orden);
                     productor.enviar(messageToInventario);
                     System.out.println("Mensaje: " + messageToInventario);
                     System.out.println("Enviado !");
-                } else{
-                    JOptionPane.showMessageDialog(null,"Mano no seas idiota llena algo primero");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Mano no seas idiota llena algo primero");
                 }
 
             }
@@ -73,10 +73,9 @@ public class View extends JFrame {
                 while (i < productosCarrito.size() && !encontrado) {
                     if (productosCarrito.get(i).getNombre().equals(nombre)) {
                         int nuevaCantidad = productosCarrito.get(i).getCantidad() + cantidad;
-                        montoTotal = Math.round(montoTotal + productosCarrito.get(i).getPrecio() * cantidad);
+                        montoTotal = montoTotal + productosCarrito.get(i).getPrecio() * cantidad;
                         productosCarrito.get(i).setCantidad(nuevaCantidad);
                         model.setValueAt(nuevaCantidad, i, 3);
-                        labelMontoTotal.setText(Double.toString(montoTotal));
                         encontrado = true;
                     }
                     i++;
@@ -88,10 +87,12 @@ public class View extends JFrame {
                             productosCarrito.add(nuevoProducto);
                             model.addRow(nuevoProducto.convertirString());
                             montoTotal = montoTotal + nuevoProducto.getPrecio() * nuevoProducto.getCantidad();
-                            labelMontoTotal.setText(Double.toString(montoTotal));
+
                         }
                     }
                 }
+                montoTotal = Math.round(montoTotal * 100.00) / 100.00;
+                labelMontoTotal.setText(Double.toString(montoTotal));
             }
         });
 
