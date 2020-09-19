@@ -15,7 +15,6 @@ def create():
         """,
         """ CREATE TABLE IF NOT EXISTS  ORDEN (
                 id_orden SERIAL PRIMARY KEY,
-                estado VARCHAR(50) NOT NULL,
                 id_cliente INTEGER NOT NULL,
                 fecha_hora TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
                 )

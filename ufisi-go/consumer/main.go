@@ -33,14 +33,24 @@ func StartKafkaConsumer() {
 		}
 		message := string(m.Value)
 		fmt.Println("Message from Inventario : ", message)
-		jsonMsge := `{"id_orden": "1", "codigo_factura": "F0008", "total_bruto": 12.5,"igv": 5.2, "datox": "adsasda"}`
+		//jsonMsge := `{"id_orden": "1", "codigo_factura": "F0008", "total_bruto": 12.5,"igv": 5.2, "datox": "adsasda"}`
+		jsonMsge := message
 		fact := model.Factura{}
 		json.Unmarshal([]byte(jsonMsge), &fact)
 		fmt.Println("Factura = ", fact)
 		idFactura := StoreFactura(fact)
 		fmt.Println(idFactura)
 		fmt.Println("Save on inventary Database!")
-		go producer.StartKafkaProducer("cuentasPorCobrar", message)
+
+		//user := &User{Name: "Frank"}
+		bmessage, err := json.Marshal(fact)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		fmt.Println("MSGE Enviado a Ctas x cobrar:")
+		fmt.Println(string(bmessage))
+		producer.StartKafkaProducer("cuentasPorCobrar", string(bmessage))
 
 	}
 }
@@ -52,6 +62,7 @@ func StoreFactura(f model.Factura) (id int64) {
 	if err != nil {
 		panic(err)
 	}
+
 	stmt, err := db.Prepare("INSERT into facturas(id_orden,codigo_factura,total_bruto,igv) values(?,?,?,?)")
 	checkErr(err)
 	res, err := stmt.Exec(f.IDOrden, f.CodigoFactura, f.TotalBruto, f.Igv)
