@@ -11,10 +11,10 @@ public class MessageSender {
 
     Properties prop = new PropertiesReader().getProperties();
 
-    public void enviar(String topico, String mensaje) {
+    public void enviar(String mensaje) {
         KafkaProducer<String, byte[]> producer = new KafkaProducer<>(this.prop, new StringSerializer(), new ByteArraySerializer());
         byte[] flujo = mensaje.getBytes();
-        ProducerRecord<String, byte[]> record = new ProducerRecord<>(prop.getProperty("kafka.topic.name"), flujo);
+        ProducerRecord<String, byte[]> record = new ProducerRecord<>(prop.getProperty("kafka.topic.producer"), flujo);
         producer.send(record);
         producer.close();
     }
