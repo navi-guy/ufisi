@@ -1,7 +1,6 @@
 from create_tables import create
 
 from consumer import receiveFromOrdenes
-from producer import sendToFacturacion
 
 def connect_and_create_tables():
     # """ Connect to the PostgreSQL database server and create tables """

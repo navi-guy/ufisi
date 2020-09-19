@@ -1,6 +1,7 @@
 from kafka import KafkaConsumer
 import json
-from producer import sendToFacturacion
+from producer import produce_message
+
 from config import config
 import psycopg2
 
@@ -18,11 +19,16 @@ def receiveFromOrdenes():
         print(msg)
         msgToFacturacion = msg.value
         for i in msgToFacturacion["productos"]:
-            verificar_stock(i)
-        msgToFacturacion = crear_orden(msgToFacturacion) 
-        print("Reservado!")
-        sendToFacturacion(msgToFacturacion)
-        print("Msge enviado a facturación!")
+            enough_stock = True
+            if enough_stock:
+                enough_stock = verificar_stock(i)
+            else:
+                break           
+        if enough_stock:      
+            msgToFacturacion = crear_orden(msgToFacturacion) 
+            print("Reservado!")
+            produce_message("facturacion",msgToFacturacion)
+            print("Msge enviado a facturación!")
         print("Esperando ....")      
 
 def verificar_stock(i):
@@ -38,11 +44,14 @@ def verificar_stock(i):
     if stock_producto>=cantidad_solicitada:
         mi_cursor.execute("UPDATE PRODUCTOS SET stock= stock-" + cantidad_solicitada_str + " WHERE id_producto = " + id_producto)
         mi_conexion.commit()
+        return True # Hay stock
     else:
         print("No hay stock")   
         mensaje = "No hay stock para el producto " + i["nombre"]
-        print("Enviar a modulo de Benjas")
-        #sendToFacturacion("{'estado':'0','mensaje':'" + mensaje + "'}")
+        msge_denegar_orden = "{'estado':'0','mensaje':'" + mensaje + "'}"
+        produce_message("confirmacion",msge_denegar_orden)
+        print("Enviado a modulo de Procesamiento de Ordenes: ",msge_denegar_orden)
+        return False # No hay stock
 
 def crear_orden(msg):
     mi_cursor.execute("INSERT INTO ORDEN (id_cliente) VALUES(" + msg["id_cliente"] + ")")

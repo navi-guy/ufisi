@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"math"
+	"math/rand"
 	"ufisi-go/db"
 	"ufisi-go/model"
 	producer "ufisi-go/producer"
@@ -17,6 +19,7 @@ import (
  * @return void
  */
 func StartKafkaConsumer() {
+
 	conf := kafka.ReaderConfig{
 		Brokers:  []string{"ec2-3-85-41-237.compute-1.amazonaws.com:9092"},
 		Topic:    "facturacion",
@@ -37,20 +40,23 @@ func StartKafkaConsumer() {
 		jsonMsge := message
 		fact := model.Factura{}
 		json.Unmarshal([]byte(jsonMsge), &fact)
-		fmt.Println("Factura = ", fact)
+		numberRandomString := randomString(5)
+		fact.CodigoFactura = "FA-00" + numberRandomString
+		totalBruto := fact.TotalBruto * 0.18
+		fact.Igv = math.Round(totalBruto*100) / 100
+		fact.TotalNeto = fact.TotalBruto + fact.Igv
+		//fmt.Println("Factura = ", fact)
 		idFactura := StoreFactura(fact)
-		fmt.Println(idFactura)
 		fmt.Println("Save on inventary Database!")
-
-		//user := &User{Name: "Frank"}
-		bmessage, err := json.Marshal(fact)
+		fact.IDFactura = idFactura
+		msgeToCtasXCobrar, err := json.Marshal(fact)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
-		fmt.Println("MSGE Enviado a Ctas x cobrar:")
-		fmt.Println(string(bmessage))
-		producer.StartKafkaProducer("cuentasPorCobrar", string(bmessage))
+		fmt.Println("Mensaje a Ctas x cobrar:")
+		fmt.Println(string(msgeToCtasXCobrar))
+		producer.StartKafkaProducer("cuentasPorCobrar", string(msgeToCtasXCobrar))
 
 	}
 }
@@ -76,4 +82,15 @@ func checkErr(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+func randomString(l int) string {
+	bytes := make([]byte, l)
+	for i := 0; i < l; i++ {
+		bytes[i] = byte(randInt(65, 90))
+	}
+	return string(bytes)
+}
+
+func randInt(min int, max int) int {
+	return min + rand.Intn(max-min)
 }

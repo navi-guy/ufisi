@@ -15,5 +15,4 @@ func main() {
 	go appKafka.StartKafkaConsumer()
 	fmt.Println("Kafka has been started...")
 	time.Sleep(10 * time.Minute)
-	//productos := "{\"products\": [{\"id\":\"21\",\"nombre\":\"papel\",\"precio\":20.5,\"cantidad\":0},{\"id\":\"22\",\"nombre\":\"madera\",\"precio\":10.0,\"cantidad\":0}]}"
 }
