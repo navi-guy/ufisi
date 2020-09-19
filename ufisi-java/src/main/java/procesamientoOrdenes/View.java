@@ -73,7 +73,7 @@ public class View extends JFrame {
                 while (i < productosCarrito.size() && !encontrado) {
                     if (productosCarrito.get(i).getNombre().equals(nombre)) {
                         int nuevaCantidad = productosCarrito.get(i).getCantidad() + cantidad;
-                        montoTotal = montoTotal + productosCarrito.get(i).getPrecio() * cantidad;
+                        montoTotal = Math.round(montoTotal + productosCarrito.get(i).getPrecio() * cantidad);
                         productosCarrito.get(i).setCantidad(nuevaCantidad);
                         model.setValueAt(nuevaCantidad, i, 3);
                         labelMontoTotal.setText(Double.toString(montoTotal));
