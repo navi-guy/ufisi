@@ -3,7 +3,7 @@
         "port": 3000
     },
     "bootstrap": {
-        "servers": "ec2-3-85-41-237.compute-1.amazonaws.com:9092"
+        "servers": "ec2-52-87-234-222.compute-1.amazonaws.com:9092"
     },
     "kafka": {
         "topics": [
