@@ -60,7 +60,7 @@ public class View extends JFrame {
                     System.out.println("Mensaje: " + messageToInventario);
                     System.out.println("Enviado !");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Mano no seas idiota llena algo primero");
+                    JOptionPane.showMessageDialog(null, "El carrito está vacío, ingrese un producto antes de hacer el pedido","Alerta", JOptionPane.WARNING_MESSAGE);
                 }
 
             }

@@ -12,7 +12,7 @@ mi_cursor = mi_conexion.cursor()
 
 def receiveFromOrdenes():
     print("Esperando ....")
-    consumer = KafkaConsumer(bootstrap_servers=['ec2-3-85-41-237.compute-1.amazonaws.com:9092'], value_deserializer=lambda m: json.loads(m.decode('ascii')))
+    consumer = KafkaConsumer(bootstrap_servers=['ec2-52-87-234-222.compute-1.amazonaws.com:9092'], value_deserializer=lambda m: json.loads(m.decode('ascii')))
     consumer.subscribe(['orden'])
     for msg in consumer:
         print("Recibido del Módulo de Procesamiento de ordenes: ")
@@ -48,7 +48,7 @@ def verificar_stock(i):
     else:
         print("No hay stock")   
         mensaje = "No hay stock para el producto " + i["nombre"]
-        msge_denegar_orden = "{'estado':'0','mensaje':'" + mensaje + "'}"
+        msge_denegar_orden = {"estado":0,"mensaje": mensaje}
         produce_message("confirmacion",msge_denegar_orden)
         print("Enviado a modulo de Procesamiento de Ordenes: ",msge_denegar_orden)
         return False # No hay stock

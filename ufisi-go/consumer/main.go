@@ -21,7 +21,7 @@ import (
 func StartKafkaConsumer() {
 
 	conf := kafka.ReaderConfig{
-		Brokers:  []string{"ec2-3-85-41-237.compute-1.amazonaws.com:9092"},
+		Brokers:  []string{"ec2-52-87-234-222.compute-1.amazonaws.com:9092"},
 		Topic:    "facturacion",
 		MaxBytes: 10,
 	}

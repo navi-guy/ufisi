@@ -6,8 +6,8 @@ import (
 	_ "github.com/go-sql-driver/mysql" // '_' significa q no se usará la variable
 )
 
-const user = "deus"
-const password = "deus"
+const user = "root"
+const password = "123456"
 const server = "127.0.0.1"
 const port = "3306"
 

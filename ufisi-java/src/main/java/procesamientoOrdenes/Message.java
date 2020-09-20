@@ -24,4 +24,12 @@ public class Message {
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "estado=" + estado +
+                ", mensaje='" + mensaje + '\'' +
+                '}';
+    }
 }

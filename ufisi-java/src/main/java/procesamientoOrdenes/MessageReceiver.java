@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class MessageReceiver implements Runnable{
+public class MessageReceiver implements Runnable {
 
     public void recibir() {
         Properties props = new PropertiesReader().getProperties();
@@ -23,8 +23,10 @@ public class MessageReceiver implements Runnable{
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(1000L);
                 for (ConsumerRecord<String, String> record : records) {
+                    System.out.println(record.value());
                     message = new Gson().fromJson(record.value(), Message.class);
-                    JOptionPane.showMessageDialog(null, message.getMensaje() ,"Mensaje", message.getEstado());
+                    System.out.println("Desde el cosumidor" + message);
+                    JOptionPane.showMessageDialog(null, message.getMensaje(), "Mensaje", message.getEstado());
                 }
             }
         }
